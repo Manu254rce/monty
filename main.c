@@ -36,7 +36,6 @@ void opcode_handler(FILE *file)
 
 		line_number++;
 	}
-	
 	free(line);
 }
 
@@ -64,5 +63,5 @@ int main(int argc, char *argv[])
 	opcode_handler(file);
 
 	fclose(file);
-	return 0;
+	return (0);
 }
