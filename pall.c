@@ -2,8 +2,8 @@
 
 /**
  * handle_pall - function that prints all elements in a stack
- * @stack
- * line_number
+ * @stack: node from the dlist stack struct
+ * @line_number: line position for opcode
  */
 
 void handle_pall(stack_t **stack, unsigned int line_number)
