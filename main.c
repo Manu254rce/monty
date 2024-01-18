@@ -1,23 +1,69 @@
 # include "monty.h"
 
 /**
- * main - entry point for our Monty interpreter implementation
+ * opcode_handler - function for handling stack opcodes
  * @argc: argument counter
  * @argv: argument vector
- * Return: 0 on Success
+ */
+
+void opcode_handler(FILE *file)
+{
+	char *line = NULL;
+	int i;
+	size_t len = 0;
+	ssize_t read = getline(&line, &len, file);
+	unsigned int line_number = 0;
+
+	instruction_t list[] = 
+	{
+		{"push", handle_push},
+		{"pall", handle_pall},
+		{NULL, NULL}
+	};
+
+	while (read != -1)
+	{
+		line[strcspn(line, "\n")] = 0;
+		for (i = 0; list[i].opcode != NULL; ++i)
+		{
+			if (strcmp(line, list[i].opcode) == 0)
+			{
+				list[i].f(NULL, line_number);
+				break;
+			}
+		}
+		if (list[i].opcode == NULL)
+			fprintf(stderr, "Unknown opcode\n");
+
+		line_number++;
+	}
+	
+	free(line);
+}
+
+/**
+ * main - entry point for our Monty interpreter
+ * @argc: command line argument numbers
+ * @argv: command line argument vector
+ * Return: 0 if Success
  */
 
 int main(int argc, char *argv[])
 {
-	int count;
+	FILE *file = fopen(argv[1], "r");
 
-	
-
-	for (count = 0; count < argc; ++count)
+	if (argc != 2)
 	{
-		printf(argv[count]);
-		printf("\n");
+		fprintf(stderr, "Usage: ./monty file\n");
+		exit(EXIT_FAILURE);
 	}
+	if (file == NULL)
+	{
+		fprintf(stderr, "Error: can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+	opcode_handler(file);
 
+	fclose(file);
 	return 0;
 }
