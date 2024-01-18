@@ -18,6 +18,7 @@ void opcode_handler(FILE *file)
 	{
 		{"push", handle_push},
 		{"pall", handle_pall},
+		{"nop", handle_nop},
 		{NULL, NULL}
 	};
 
