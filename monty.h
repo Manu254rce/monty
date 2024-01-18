@@ -8,6 +8,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <fcntl.h>
+# include <ctype.h>
 
 # define MAX_BUFFER 100
 
