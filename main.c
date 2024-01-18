@@ -2,8 +2,7 @@
 
 /**
  * opcode_handler - function for handling stack opcodes
- * @argc: argument counter
- * @argv: argument vector
+ * @file: pointer to the file being read
  */
 
 void opcode_handler(FILE *file)
@@ -14,10 +13,8 @@ void opcode_handler(FILE *file)
 	ssize_t read;
 	unsigned int line_number = 0;
 
-	instruction_t list[] = 
-	{
-		{"push", handle_push},
-		{"pall", handle_pall},
+	instruction_t list[] = {
+		{"push", handle_push}, {"pall", handle_pall},
 		{NULL, NULL}
 	};
 
@@ -37,7 +34,7 @@ void opcode_handler(FILE *file)
 
 		line_number++;
 	}
-	
+
 	free(line);
 }
 
@@ -65,5 +62,5 @@ int main(int argc, char *argv[])
 	opcode_handler(file);
 
 	fclose(file);
-	return 0;
+	return (0);
 }
