@@ -11,7 +11,7 @@ void opcode_handler(FILE *file)
 	char *line = NULL;
 	int i;
 	size_t len = 0;
-	ssize_t read = getline(&line, &len, file);
+	ssize_t read;
 	unsigned int line_number = 0;
 
 	instruction_t list[] = 
@@ -21,7 +21,7 @@ void opcode_handler(FILE *file)
 		{NULL, NULL}
 	};
 
-	while (read != -1)
+	while ((read = getline(&line, &len, file)) != -1)
 	{
 		line[strcspn(line, "\n")] = 0;
 		for (i = 0; list[i].opcode != NULL; ++i)
@@ -33,7 +33,7 @@ void opcode_handler(FILE *file)
 			}
 		}
 		if (list[i].opcode == NULL)
-			fprintf(stderr, "Unknown opcode\n");
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, line);
 
 		line_number++;
 	}
